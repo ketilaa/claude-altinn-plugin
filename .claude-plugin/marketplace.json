@@ -1,0 +1,17 @@
+{
+  "name": "ketilaa-altinn",
+  "owner": {
+    "name": "Ketil Aasarød"
+  },
+  "description": "Claude Code plugins for Altinn Studio app development",
+  "metadata": {
+    "pluginRoot": "./plugins"
+  },
+  "plugins": [
+    {
+      "name": "altinn-app-dev",
+      "source": "./plugins/altinn-app-dev",
+      "description": "Skills for developing Altinn Studio apps (the .NET Altinn.App.Core/Altinn.App.Api backend)"
+    }
+  ]
+}
