@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Altinn.App.Core.Features;
 using Altinn.Platform.Storage.Interface.Models;
 
-namespace Altinn.App.CustomServices.EventMetadata;
+namespace Altinn.App.EventMetadata;
 
 /// <summary>
 /// Ensures configured EventMetadata values are stamped onto the instance as soon as it is created.

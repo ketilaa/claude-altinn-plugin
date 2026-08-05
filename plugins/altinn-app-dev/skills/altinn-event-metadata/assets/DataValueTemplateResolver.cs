@@ -3,7 +3,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
 
-namespace Altinn.App.CustomServices.EventMetadata;
+namespace Altinn.App.EventMetadata;
 
 /// <summary>
 /// Resolves "${model.some.path}" placeholders in a template string against the current form data model.

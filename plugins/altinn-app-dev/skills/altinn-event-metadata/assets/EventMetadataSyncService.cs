@@ -4,7 +4,7 @@ using Altinn.App.Core.Internal.Instances;
 using Altinn.Platform.Storage.Interface.Models;
 using Microsoft.Extensions.Configuration;
 
-namespace Altinn.App.CustomServices.EventMetadata;
+namespace Altinn.App.EventMetadata;
 
 /// <summary>
 /// Resolves the key/template pairs configured under the "EventMetadata" section of appsettings.json against

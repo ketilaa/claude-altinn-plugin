@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Altinn.App.Core.Features;
 using Altinn.Platform.Storage.Interface.Models;
 
-namespace Altinn.App.CustomServices.EventMetadata;
+namespace Altinn.App.EventMetadata;
 
 /// <summary>
 /// Re-resolves configured EventMetadata values every time the user saves form data, so templated values

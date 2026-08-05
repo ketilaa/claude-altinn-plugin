@@ -57,13 +57,14 @@ app registration added first wins; `IDataProcessor` implementations are collecte
    still match before assuming this recipe applies as-is).
 
 2. **Copy the four bundled files** from this skill's `assets/` folder into the app under
-   `App/CustomServices/EventMetadata/`:
+   `App/EventMetadata/` (a plain, descriptive folder — avoid dumping this into a generic "CustomServices"-style
+   catch-all; the name should say what the code does, not just that it isn't framework code):
    - `DataValueTemplateResolver.cs`
    - `EventMetadataSyncService.cs`
    - `EventMetadataInstantiationProcessor.cs`
    - `EventMetadataDataProcessor.cs`
 
-   They use the namespace `Altinn.App.CustomServices.EventMetadata`. Check the target app's `App/App.csproj`
+   They use the namespace `Altinn.App.EventMetadata`. Check the target app's `App/App.csproj`
    `<RootNamespace>` — Altinn Studio scaffolds default to `Altinn.App`, so this namespace usually needs no
    change; adjust it if the app deviates.
 
@@ -76,7 +77,7 @@ app registration added first wins; `IDataProcessor` implementations are collecte
    ```
 
    Add the matching `using` directives (`Altinn.App.Core.Features;` and
-   `Altinn.App.CustomServices.EventMetadata;`).
+   `Altinn.App.EventMetadata;`).
 
 4. **Turn on event publishing.** In `App/appsettings.json`, set:
 
