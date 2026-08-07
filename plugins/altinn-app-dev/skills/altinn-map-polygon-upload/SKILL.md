@@ -147,6 +147,11 @@ namespace Altinn.App.Logic.DataProcessing
                 return;
             }
 
+            // ProcessDataWrite runs on every autosave of the model, not just when the file changes —
+            // skip the blob-storage round trip unless the trigger actually moved.
+            if (previousData is YourModel previousFormData && previousFormData.WktTrigger == formData.WktTrigger)
+                return;
+
             var instanceGuid = Guid.Parse(instance.Id.Split('/')[1]);
             Stream stream = await _dataClient.GetBinaryData(
                 int.Parse(instance.InstanceOwner.PartyId),
@@ -229,19 +234,28 @@ String format has different validation rules and can produce errors.
 
 ## applicationmetadata.json
 
-For WKT files: don't restrict `allowedContentTypes` to `application/octet-stream` (browsers never
-report that type). Use an empty list (accepts anything) or include `text/plain`:
+`.wkt` (and `.geojson`, if not registered on the host OS) isn't a MIME type most browsers or Altinn's
+own content-type sniffer recognize — unlike common types (PDF, PNG, JPEG), it is exactly the case where
+the upload gets classified as `application/octet-stream` rather than `text/plain`. **Keep
+`application/octet-stream` in `allowedContentTypes`** rather than excluding it in favor of `text/plain`;
+including both is the safest option:
 
 ```json
 {
   "id": "area-wkt",
-  "allowedContentTypes": [],
+  "allowedContentTypes": ["application/octet-stream", "text/plain"],
   "taskId": "Task_1",
   "maxCount": 1,
   "minCount": 0,
   "enablePdfCreation": false
 }
 ```
+
+An empty list (`[]`, accepts anything) also works and sidesteps the guessing entirely. Whichever you
+pick, verify against a real upload rather than trusting the extension — the app compares the
+**server-sniffed** content type of the bytes against `allowedContentTypes`, not just the client's
+declared header, so a mismatch surfaces as a `400` even when the header "looks right" (see the
+`altinn-local-test` skill's note on `allowedContentTypes` vs. what uploads actually report).
 
 ---
 
@@ -257,6 +271,7 @@ report that type). Use an empty list (accepts anything) or include `text/plain`:
 | `geometryIsEditable cannot be used without toolbar` | Binding without toolbar config | Remove the `geometryIsEditable` binding |
 | Polygon doesn't render (no error) | List class is missing `altinnRowId` | Add an `AltinnRowId Guid` with the correct attributes |
 | Map doesn't update after upload | FileUpload is missing `simpleBinding` to the trigger field | Add `dataModelBindings.simpleBinding` to the FileUpload |
+| `400`: `Content type header 'text/plain' does not match mime type 'application/octet-stream' for uploaded file` | `.wkt` isn't a recognized extension, so the server sniffs it as `application/octet-stream` regardless of the declared header | Add `application/octet-stream` to `allowedContentTypes` (see applicationmetadata.json section) |
 
 ---
 
