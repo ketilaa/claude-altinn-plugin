@@ -1,6 +1,6 @@
 {
   "name": "altinn-app-dev",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Skills for developing Altinn Studio apps (the .NET Altinn.App.Core/Altinn.App.Api backend)",
   "author": {
     "name": "Ketil Aasarød"
